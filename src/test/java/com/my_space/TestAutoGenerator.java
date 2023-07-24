@@ -21,11 +21,11 @@ public class TestAutoGenerator {
         // Step2：全局配置
         GlobalConfig gc = new GlobalConfig();
         // 填写代码生成的目录(需要修改)
-        String projectPath = "E:\\myProject\\myGit\\admin-vue-template\\back";
+        String projectPath = "E:\\code\\backend\\myspace-backend";
         // 拼接出代码最终输出的目录
         gc.setOutputDir(projectPath + "/src/main/java");
         // 配置开发者信息（可选）（需要修改）
-        gc.setAuthor("lyh");
+        gc.setAuthor("bake");
         // 配置是否打开目录，false 为不打开（可选）
         gc.setOpen(false);
         // 实体属性 Swagger2 注解，添加 Swagger 依赖，开启 Swagger2 模式（可选）
@@ -43,20 +43,20 @@ public class TestAutoGenerator {
         // Step3：数据源配置（需要修改）
         DataSourceConfig dsc = new DataSourceConfig();
         // 配置数据库 url 地址
-        dsc.setUrl("jdbc:mysql://localhost:3306/admin_template?useUnicode=true&characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://localhost:3306/myspace?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC");
         // dsc.setSchemaName("testMyBatisPlus"); // 可以直接在 url 中指定数据库名
         // 配置数据库驱动
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         // 配置数据库连接用户名
         dsc.setUsername("root");
         // 配置数据库连接密码
-        dsc.setPassword("123456");
+        dsc.setPassword("");
         mpg.setDataSource(dsc);
 
         // Step:4：包配置
         PackageConfig pc = new PackageConfig();
         // 配置父包名（需要修改）
-        pc.setParent("com.lyh.admin_template");
+        pc.setParent("com.my_space");
         // 配置模块名（需要修改）
         pc.setModuleName("back");
         // 配置 entity 包名
@@ -72,7 +72,7 @@ public class TestAutoGenerator {
         // Step5：策略配置（数据库表配置）
         StrategyConfig strategy = new StrategyConfig();
         // 指定表名（可以同时操作多个表，使用 , 隔开）（需要修改）
-        strategy.setInclude("back_user");
+        strategy.setInclude("sys_user,sys_user_role");
         // 配置数据表与实体类名之间映射的策略
         strategy.setNaming(NamingStrategy.underline_to_camel);
         // 配置数据表的字段与实体类的属性名之间映射的策略

@@ -48,6 +48,10 @@ public class User implements Serializable {
     @ApiModelProperty(value = "用户密码")
     private String password;
 
+    @NotEmpty(message = "{user.email.empty}", groups = {AddGroup.class, UpdateGroup.class})
+    @ApiModelProperty(value = "用户邮箱")
+    private String email;
+
     @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
