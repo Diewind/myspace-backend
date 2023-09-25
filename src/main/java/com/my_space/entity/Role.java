@@ -3,6 +3,7 @@ package com.my_space.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import com.my_space.common.validator.group.AddGroup;
 import com.my_space.common.validator.group.UpdateGroup;
+import com.my_space.handler.ListToStringHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -25,7 +27,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("back_role")
+@TableName(value="back_role", autoResultMap = true)
 @ApiModel(value="Role对象", description="角色表")
 public class Role implements Serializable {
 
@@ -62,7 +64,8 @@ public class Role implements Serializable {
   private Integer version;
 
   @NotEmpty(message = "{role.authorizedMenu.empty}", groups = {AddGroup.class, UpdateGroup.class})
+  @TableField(typeHandler = ListToStringHandler.class)
   @ApiModelProperty(value = "授权菜单")
-  private String authorizedMenu;
+  private List authorizedMenu;
 
 }

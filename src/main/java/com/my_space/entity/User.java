@@ -70,4 +70,10 @@ public class User implements Serializable {
     @ApiModelProperty(value = "版本号")
     private Integer version;
 
+    @ApiModelProperty(value = "所属角色")
+    private String roleId;
+
+    @ApiModelProperty(value = "所属角色名称")
+    private String roleName;
+
 }

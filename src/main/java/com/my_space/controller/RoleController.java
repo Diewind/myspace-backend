@@ -70,7 +70,7 @@ public class RoleController {
         if(roleService.updateById(role)) {
             return Result.ok().message("数据修改成功");
         }else{
-            return Result.error().message("数据修改成功");
+            return Result.error().message("数据修改失败");
         }
     }
 }

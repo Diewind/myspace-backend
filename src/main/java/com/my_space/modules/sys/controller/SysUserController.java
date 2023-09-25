@@ -8,6 +8,7 @@ import com.my_space.common.validator.group.sys.RegisterGroup;
 import com.my_space.modules.sys.entity.SysUser;
 import com.my_space.modules.sys.service.SysUserService;
 import com.my_space.modules.sys.vo.*;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +16,10 @@ import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.Date;
 
 /**
@@ -46,6 +50,11 @@ public class SysUserController {
      */
     @Autowired
     private SmsUtil smsUtil;
+    /**
+     * 用于获取请求头信息
+     */
+    @Autowired
+    private HttpServletRequest request;
     /**
      * 常量，表示用户密码登录操作
      */
@@ -239,6 +248,27 @@ public class SysUserController {
     @GetMapping("/test")
     public Result testRefreshToken() {
         return Result.ok();
+    }
+
+    @ApiOperation(value = "获取用户信息")
+    @GetMapping("/info")
+    public Result userInfo() {
+        String token = request.getHeader("Token");
+        if (JwtUtil.checkToken(token)) {
+            Claims jwt = JwtUtil.getTokenBody(token);
+            Object data = jwt.get("data");
+            return Result.ok().message("获取用户信息成功").data("user", data);
+        }
+        return Result.ok().message("token 已过期");
+    }
+
+    @ApiOperation(value = "获取天气信息")
+    @GetMapping("/weather-info")
+    public Result weatherInfo(@RequestParam String cityNum) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://t.weather.itboy.net/api/weather/city/"+cityNum;
+        Object data = restTemplate.getForObject(url, Object.class);
+        return Result.ok().message("天气信息").data("weather", data);
     }
 }
 
